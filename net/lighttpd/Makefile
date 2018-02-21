@@ -55,6 +55,8 @@ endef
 
 BASE_MODULES:=dirlisting indexfile staticfile
 
+TARGET_CFLAGS+= -std=gnu99
+
 CONFIGURE_ARGS+= \
 	--libdir=/usr/lib/lighttpd \
 	--sysconfdir=/etc/lighttpd \

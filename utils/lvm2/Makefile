@@ -41,7 +41,7 @@ define Package/lvm2
   SUBMENU:=Disc
   TITLE:=The Linux Logical Volume Manager
   URL:=http://sourceware.org/lvm2/
-  DEPENDS:=+libdevmapper +libblkid +libreadline +libncurses
+  DEPENDS:=+libdevmapper +libblkid +libreadline +libncurses +libuuid
 endef
 
 define Package/lvm2/description
@@ -55,6 +55,8 @@ CONFIGURE_ARGS += --disable-o_direct
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
 		CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) $(FPIC)" \
+		LDFLAGS="$(TARGET_LDFLAGS) -L../libdaemon/client -L../libdm -L../liblvm -L../lib" \
+		LIBS="-luuid -lblkid" \
 		DESTDIR="$(PKG_INSTALL_DIR)" \
 		install
 endef
