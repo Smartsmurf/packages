@@ -40,7 +40,7 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_PYTHON_BLUETOOTH_SUPPORT
 
 PKG_BUILD_DEPENDS:=python/host
-HOST_BUILD_DEPENDS:=bzip2/host expat/host zlib/host
+HOST_BUILD_DEPENDS:=bzip2/host expat/host
 
 include $(INCLUDE_DIR)/host-build.mk
 include $(INCLUDE_DIR)/package.mk
@@ -287,7 +287,7 @@ define Host/Compile
 endef
 
 define Host/Install
-	$(MAKE) -C $(HOST_BUILD_DIR) install
+	$(MAKE) DESTDIR=$(HOST_PYTHON_DIR) -C $(HOST_BUILD_DIR) install
 	$(INSTALL_DIR) $(HOST_PYTHON_DIR)/bin/
 	$(INSTALL_BIN) $(HOST_BUILD_DIR)/Parser/pgen $(HOST_PYTHON_DIR)/bin/pgen2
 endef

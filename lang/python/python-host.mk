@@ -15,7 +15,7 @@ __python_host_mk_inc=1
 python_mk_path:=$(dir $(lastword $(MAKEFILE_LIST)))
 include $(python_mk_path)python-version.mk
 
-HOST_PYTHON_DIR:=$(STAGING_DIR_HOSTPKG)
+HOST_PYTHON_DIR:=$(STAGING_DIR_HOST)/usr
 HOST_PYTHON_INC_DIR:=$(HOST_PYTHON_DIR)/include/python$(PYTHON_VERSION)
 HOST_PYTHON_LIB_DIR:=$(HOST_PYTHON_DIR)/lib/python$(PYTHON_VERSION)
 
@@ -50,7 +50,7 @@ define host_python_settings
 	LDSHARED="$(HOSTCC) -shared" \
 	CFLAGS="$(HOST_CFLAGS)" \
 	CPPFLAGS="$(HOST_CPPFLAGS) -I$(HOST_PYTHON_INC_DIR)" \
-	LDFLAGS="$(HOST_LDFLAGS) -lpython$(PYTHON_VERSION) -Wl$(comma)-rpath=$(STAGING_DIR_HOSTPKG)/lib" \
+	LDFLAGS="$(HOST_LDFLAGS) -lpython$(PYTHON_VERSION) -Wl$(comma)-rpath=$(STAGING_DIR_HOST)/usr/lib" \
 	_PYTHON_HOST_PLATFORM=linux2
 endef
 
@@ -70,7 +70,7 @@ define Build/Compile/HostPyRunHost
 endef
 
 # Note: I shamelessly copied this from Yousong's logic (from python-packages);
-HOST_PYTHON_PIP:=$(STAGING_DIR_HOSTPKG)/bin/pip$(PYTHON_VERSION)
+HOST_PYTHON_PIP:=$(STAGING_DIR_HOST)/usr/bin/pip$(PYTHON_VERSION)
 define host_python_pip_install
 	$(call host_python_settings) \
 	$(HOST_PYTHON_PIP) install \
@@ -81,7 +81,7 @@ define host_python_pip_install
 endef
 
 define host_python_pip_install_host
-$(call host_python_pip_install,$(STAGING_DIR_HOSTPKG),"",$(1))
+$(call host_python_pip_install,$(STAGING_DIR_HOST)/usr,"",$(1))
 endef
 
 # $(1) => build subdir
