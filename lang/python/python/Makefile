@@ -287,7 +287,7 @@ define Host/Compile
 endef
 
 define Host/Install
-	$(MAKE) DESTDIR=$(HOST_PYTHON_DIR) -C $(HOST_BUILD_DIR) install
+	$(MAKE) -C $(HOST_BUILD_DIR) install
 	$(INSTALL_DIR) $(HOST_PYTHON_DIR)/bin/
 	$(INSTALL_BIN) $(HOST_BUILD_DIR)/Parser/pgen $(HOST_PYTHON_DIR)/bin/pgen2
 endef
